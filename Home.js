@@ -1,11 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 
 import dataa from '../../data';
 import { loadData } from '../../store/actions/dataActions';
 
-const Home = ({ data, loadData }) => {
-	loadData(dataa);
+const Home = () => {
+	const dispatch = useDispatch()
+	const data = useSelector(state => state.dataReducer)
+	
+	useEffect(() => {
+		dispatch(loadData())
+	}, [dispatch])
 
 	return (
 		<section className="home">
@@ -22,8 +27,4 @@ const Home = ({ data, loadData }) => {
 	);
 };
 
-const mapStateToProps = state => ({
-	data: state.dataReducer
-});
-
-export default connect(mapStateToProps, { loadData })(Home);
+export default Home;
